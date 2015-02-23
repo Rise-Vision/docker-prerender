@@ -16,4 +16,4 @@ RUN cd /data && npm install
 
 ADD . /data/
 
-CMD node /data/server.js
+CMD node /data/server.js > /data/my_app_log.log 2> /data/my_app_err.log

@@ -9,7 +9,7 @@ var server = prerender({
 
 
 server.use(prerender.removeScriptTags());
-server.use(prerender.basicAuth());
+//server.use(prerender.basicAuth());
 server.use(prerender.inMemoryHtmlCache());
 
 //server.use(prerender.blacklist());
