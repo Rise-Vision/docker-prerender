@@ -10,9 +10,11 @@ deployment:
     branch: stage
     commands:
       - rsync -rptz -e ssh --delete ./ prerender@webserver-stage.risevision.com:/docker-images/prerender
-      - ssh prerender@webserver-stage.risevision.com sudo /docker-images/prerender/make build start
+      - ssh prerender@webserver-stage.risevision.com cd /docker-images/prerender && sudo make stop rm clean
+      - ssh prerender@webserver-stage.risevision.com cd /docker-images/prerender && sudo make build start
   production:
     branch: master
     commands:
       - rsync -rptz -e ssh --delete ./ prerender@webserver.risevision.com:/docker-images/prerender
-      - ssh prerender@webserver.risevision.com sudo /docker-images/prerender/make build start
+      - ssh prerender@webserver.risevision.com cd /docker-images/prerender && sudo make stop rm clean
+      - ssh prerender@webserver.risevision.com cd /docker-images/prerender && sudo make build start
