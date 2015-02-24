@@ -45,7 +45,9 @@ runbash:
 		docker run -t -i -d $(REPO):$(VERSION) $(CMD)
 
 clean:
-		docker rmi $(REPO):latest $(REPO):$(VERSION) || true
+        @if docker images $(REPO) | awk '{ print $$2 }' | grep -q -F $(REPO):$(VERSION); then
+		    docker rmi $(REPO):latest $(REPO):$(VERSION) || true
+        fi
 
 cleanbuild:
         stop rm clean build
