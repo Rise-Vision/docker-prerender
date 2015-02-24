@@ -1,0 +1,18 @@
+deployment:
+  automerge:
+    branch: /(feature|fix|chore).*/
+    commands:
+      - git checkout stage
+      - git pull --quiet --no-edit origin stage
+      - git merge $CIRCLE_BRANCH -m "Merged commit $CIRCLE_SHA1 into $CIRCLE_BRANCH"
+      - git push origin stage
+  staging:
+    branch: stage
+    commands:
+      - rsync -rptz -e ssh --delete ./ prerender@webserver-stage.risevision.com:/docker-images/prerender
+      - ssh prerender@webserver-stage.risevision.com sudo /docker-images/prerender/make build start
+  production:
+    branch: master
+    commands:
+      - rsync -rptz -e ssh --delete ./ prerender@webserver.risevision.com:/docker-images/prerender
+      - ssh prerender@webserver.risevision.com sudo /docker-images/prerender/make build start
