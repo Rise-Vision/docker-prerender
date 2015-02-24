@@ -16,26 +16,26 @@ push:
 		docker push $(REPO)
 
 run:
-        @if !CHECK_CONTAINER; then
+		@if !CHECK_CONTAINER; then
             docker run -d --name $(NAME) $(REPO):$(VERSION)
-        fi
+		fi
 
 
 stop:
-        @if CHECK_RUNNING_CONTAINER; then
+		@if CHECK_RUNNING_CONTAINER; then
             docker stop $(NAME)
-        fi
+		fi
 
 
 start:
-        @if !CHECK_RUNNING_CONTAINER; then
+		@if !CHECK_RUNNING_CONTAINER; then
             docker start $(NAME)
-        fi
+		fi
 
 rm:
-        @if CHECK_CONTAINER; then
+		@if CHECK_CONTAINER; then
             docker rm -f $(NAME);
-        fi
+		fi
 
 
 bash: CMD = bash
@@ -45,10 +45,10 @@ runbash:
 		docker run -t -i -d $(REPO):$(VERSION) $(CMD)
 
 clean:
-        @if docker images $(REPO) | awk '{ print $$2 }' | grep -q -F $(REPO):$(VERSION); then
-		    docker rmi $(REPO):latest $(REPO):$(VERSION) || true
-        fi
+		@if docker images $(REPO) | awk '{ print $$2 }' | grep -q -F $(REPO):$(VERSION); then
+			docker rmi $(REPO):latest $(REPO):$(VERSION) || true
+		fi
 
 cleanbuild:
-        stop rm clean build
+		stop rm clean build
 
