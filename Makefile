@@ -16,25 +16,25 @@ push:
 		docker push $(REPO)
 
 run:
-		@if !CHECK_CONTAINER; then
-			docker run -d --name $(NAME) $(REPO):$(VERSION)
+		@if !CHECK_CONTAINER; then \
+			docker run -d --name $(NAME) $(REPO):$(VERSION); \
 		fi
 
 
 stop:
-		@if CHECK_RUNNING_CONTAINER; then
-			docker stop $(NAME)
+		@if CHECK_RUNNING_CONTAINER; then \
+			docker stop $(NAME); \
 		fi
 
 
 start:
-		@if !CHECK_RUNNING_CONTAINER; then
-			docker start $(NAME)
+		@if !CHECK_RUNNING_CONTAINER; then \
+			docker start $(NAME); \
 		fi
 
 remove:
-		@if CHECK_CONTAINER; then
-			docker rm -f $(NAME);
+		@if CHECK_CONTAINER; then \
+			docker rm -f $(NAME); \
 		fi
 
 
@@ -45,8 +45,8 @@ runbash:
 		docker run -t -i -d $(REPO):$(VERSION) $(CMD)
 
 clean:
-		@if docker images $(REPO) | awk '{ print $$2 }' | grep -q -F $(REPO):$(VERSION); then
-			docker rmi $(REPO):latest $(REPO):$(VERSION) || true
+		@if docker images $(REPO) | awk '{ print $$2 }' | grep -q -F $(REPO):$(VERSION); then\
+			docker rmi $(REPO):latest $(REPO):$(VERSION) || true;\
 		fi
 
 cleanbuild: stop remove clean build
