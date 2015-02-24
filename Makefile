@@ -17,24 +17,24 @@ push:
 
 run:
 		@if !CHECK_CONTAINER; then
-            docker run -d --name $(NAME) $(REPO):$(VERSION)
+			docker run -d --name $(NAME) $(REPO):$(VERSION)
 		fi
 
 
 stop:
 		@if CHECK_RUNNING_CONTAINER; then
-            docker stop $(NAME)
+			docker stop $(NAME)
 		fi
 
 
 start:
 		@if !CHECK_RUNNING_CONTAINER; then
-            docker start $(NAME)
+			docker start $(NAME)
 		fi
 
 rm:
 		@if CHECK_CONTAINER; then
-            docker rm -f $(NAME);
+			docker rm -f $(NAME);
 		fi
 
 
