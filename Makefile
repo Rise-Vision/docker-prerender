@@ -5,7 +5,7 @@ CHECK_CONTAINER=docker ps -a | awk '{ print $$2 }' | grep -q -F $(REPO):$(VERSIO
 CHECK_RUNNING_CONTAINER=docker ps | awk '{ print $$2 }' | grep -q -F $(REPO):$(VERSION)
 
 
-.PHONY: admin bash start build
+.PHONY: bash start stop remove clean build push runbash cleanbuild
 
 all: build
 
@@ -39,7 +39,7 @@ remove:
 
 
 bash: CMD = bash
-bash: build run
+bash: build runbash
 
 runbash:
 		docker run -t -i -d $(REPO):$(VERSION) $(CMD)
