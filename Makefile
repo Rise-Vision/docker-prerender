@@ -49,6 +49,6 @@ clean:
 			docker rmi $(REPO):latest $(REPO):$(VERSION) || true
 		fi
 
-cleanbuild:
-		stop remove clean build
+cleanbuild: stop remove clean build
+
 
