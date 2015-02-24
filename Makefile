@@ -14,7 +14,7 @@ push:
 		docker push $(REPO)
 
 run:
-		@if !docker ps -a | awk '{ print $$2 }' | grep -q -F $(REPO):$(VERSION); then \
+		@if ! docker ps -a | awk '{ print $$2 }' | grep -q -F $(REPO):$(VERSION); then \
 			docker run -d --name $(NAME) $(REPO):$(VERSION); \
 		fi
 
@@ -26,7 +26,7 @@ stop:
 
 
 start:
-		@if !docker ps | awk '{ print $$2 }' | grep -q -F $(REPO):$(VERSION); then \
+		@if ! docker ps | awk '{ print $$2 }' | grep -q -F $(REPO):$(VERSION); then \
 			docker start $(NAME); \
 		fi
 
@@ -43,7 +43,7 @@ runbash:
 		docker run -t -i -d $(REPO):$(VERSION) $(CMD)
 
 clean:
-		@if docker images $(REPO) | awk '{ print $$2 }' | grep -q -F $(REPO):$(VERSION); then\
+		@if docker images $(REPO) | awk '{ print $$1 }'; then\
 			docker rmi $(REPO):latest $(REPO):$(VERSION) || true;\
 		fi
 
