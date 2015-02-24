@@ -32,7 +32,7 @@ start:
 			docker start $(NAME)
 		fi
 
-rm:
+remove:
 		@if CHECK_CONTAINER; then
 			docker rm -f $(NAME);
 		fi
@@ -50,5 +50,5 @@ clean:
 		fi
 
 cleanbuild:
-		stop rm clean build
+		stop remove clean build
 
