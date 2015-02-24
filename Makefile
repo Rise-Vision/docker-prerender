@@ -1,8 +1,6 @@
 NAME=prerender
 REPO=rise-vision/$(NAME)
 VERSION=1.0.0
-CHECK_CONTAINER=docker ps -a | awk '{ print $$2 }' | grep -q -F $(REPO):$(VERSION)
-CHECK_RUNNING_CONTAINER=docker ps | awk '{ print $$2 }' | grep -q -F $(REPO):$(VERSION)
 
 
 .PHONY: bash start stop remove clean build push runbash cleanbuild
@@ -16,24 +14,24 @@ push:
 		docker push $(REPO)
 
 run:
-		@if !CHECK_CONTAINER; then \
+		@if !docker ps -a | awk '{ print $$2 }' | grep -q -F $(REPO):$(VERSION); then \
 			docker run -d --name $(NAME) $(REPO):$(VERSION); \
 		fi
 
 
 stop:
-		@if CHECK_RUNNING_CONTAINER; then \
+		@if docker ps | awk '{ print $$2 }' | grep -q -F $(REPO):$(VERSION); then \
 			docker stop $(NAME); \
 		fi
 
 
 start:
-		@if !CHECK_RUNNING_CONTAINER; then \
+		@if !docker ps | awk '{ print $$2 }' | grep -q -F $(REPO):$(VERSION); then \
 			docker start $(NAME); \
 		fi
 
 remove:
-		@if CHECK_CONTAINER; then \
+		@if docker ps -a | awk '{ print $$2 }' | grep -q -F $(REPO):$(VERSION); then \
 			docker rm -f $(NAME); \
 		fi
 
