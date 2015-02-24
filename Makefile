@@ -8,7 +8,7 @@ VERSION=1.0.0
 all: build
 
 build:
-		docker build -t $REPO:$VERSION .
+		docker build -t $(REPO):$(VERSION) .
 
 push:
 		docker push $(REPO)
@@ -44,7 +44,7 @@ runbash:
 
 clean:
 		@if docker images $(REPO) | awk '{ print $$1 }'; then\
-			docker rmi $(REPO):latest $(REPO):$(VERSION) || true;\
+			docker rmi $(REPO):$(VERSION) || true;\
 		fi
 
 cleanbuild: stop remove clean build
