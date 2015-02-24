@@ -8,7 +8,7 @@ VERSION=1.0.0
 all: build
 
 build:
-		docker build -t $(REPO):$(VERSION) .
+		docker build -t $REPO:$VERSION .
 
 push:
 		docker push $(REPO)
