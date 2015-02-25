@@ -1,3 +1,9 @@
+test:
+  override:
+    - echo "There is no test"
+dependencies:
+  override:
+    - echo "Don't build with npm"
 deployment:
   automerge:
     branch: /(feature|fix|chore).*/
