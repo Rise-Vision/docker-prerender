@@ -12,7 +12,7 @@ RUN mkdir /data
 
 ADD ./package.json /data/package.json
 
-RUN cd /data && npm install -g
+RUN cd /data && npm install
 
 ADD . /data/
 
