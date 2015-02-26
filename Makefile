@@ -20,18 +20,18 @@ run:
 
 
 stop:
-		@if docker ps | awk '{ print $$2 }' | grep -q -F $(REPO):$(VERSION); then \
+		@if docker ps -a | awk '{ print $$12 }' | grep -q -F $(NAME); then \
 			docker stop $(NAME); \
 		fi
 
 
 start:
-		@if ! docker ps | awk '{ print $$2 }' | grep -q -F $(REPO):$(VERSION); then \
+		@if ! docker ps -a | awk '{ print $$12 }' | grep -q -F $(NAME); then \
 			docker start $(NAME); \
 		fi
 
 remove:
-		@if docker ps -a | awk '{ print $$2 }' | grep -q -F $(REPO):$(VERSION); then \
+		@if docker ps -a | awk '{ print $$12 }' | grep -q -F $(NAME); then \
 			docker rm -f $(NAME); \
 		fi
 
@@ -47,6 +47,6 @@ clean:
 			docker rmi $(REPO):$(VERSION) || true;\
 		fi
 
-cleanbuild: stop remove clean build
+cleanbuild: clean build
 
 

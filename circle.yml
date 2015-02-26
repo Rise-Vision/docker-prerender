@@ -16,13 +16,13 @@ deployment:
     branch: stage
     commands:
       - rsync -rptz -e ssh --delete ./ prerender@webserver-stage.risevision.com:/docker-images/prerender
-      - ssh prerender@webserver-stage.risevision.com 'cd /docker-images/prerender && sudo make cleanbuild run'
+      - ssh prerender@webserver-stage.risevision.com 'cd /docker-images/prerender && sudo make cleanbuild remove run'
       - echo "Trigger docker-webserver build"
       - curl -X POST https://circleci.com/api/v1/project/Rise-Vision/docker-webserver/tree/stage?circle-token=$DOCKER_WEBSERVER_TOKEN
   production:
     branch: master
     commands:
       - rsync -rptz -e ssh --delete ./ prerender@webserver.risevision.com:/docker-images/prerender
-      - ssh prerender@webserver.risevision.com 'cd /docker-images/prerender && sudo make cleanbuild run'
+      - ssh prerender@webserver.risevision.com 'cd /docker-images/prerender && sudo make cleanbuild remove run'
       - echo "Trigger docker-webserver build"
       - curl -X POST https://circleci.com/api/v1/project/Rise-Vision/docker-webserver/tree/master?circle-token=$DOCKER_WEBSERVER_TOKEN
