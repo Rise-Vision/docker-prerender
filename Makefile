@@ -20,18 +20,18 @@ run:
 
 
 stop:
-		@if docker ps -a | awk '{ print $$12 }' | grep -q -F $(NAME); then \
+		@if docker ps -a | awk '{ print $$13 }' | grep -q -F $(NAME); then \
 			docker stop $(NAME); \
 		fi
 
 
 start:
-		@if ! docker ps -a | awk '{ print $$12 }' | grep -q -F $(NAME); then \
+		@if ! docker ps -a | awk '{ print $$13 }' | grep -q -F $(NAME); then \
 			docker start $(NAME); \
 		fi
 
 remove:
-		@if docker ps -a | awk '{ print $$12 }' | grep -q -F $(NAME); then \
+		@if docker ps -a | awk '{ print $$13 }' | grep -q -F $(NAME); then \
 			docker rm -f $(NAME); \
 		fi
 
