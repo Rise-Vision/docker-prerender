@@ -14,24 +14,24 @@ push:
 		docker push $(REPO)
 
 run:
-		@if ! docker ps -a | awk '{ print $$2 }' | grep -q -F $(REPO):$(VERSION); then \
+		@if ! docker ps -a | egrep "[[:space:]]$(REPO):$(VERSION)[[:space:]]"; then \
 			docker run -d --name $(NAME) $(REPO):$(VERSION); \
 		fi
 
 
 stop:
-		@if docker ps -a | awk '{ print $$13 }' | grep -q -F $(NAME); then \
+		@if docker ps -a | egrep "[[:space:]]$(NAME)[[:space:]]"; then \
 			docker stop $(NAME); \
 		fi
 
 
 start:
-		@if ! docker ps -a | awk '{ print $$13 }' | grep -q -F $(NAME); then \
+		@if ! docker ps -a | egrep "[[:space:]]$(NAME)[[:space:]]"; then \
 			docker start $(NAME); \
 		fi
 
 remove:
-		@if docker ps -a | awk '{ print $$13 }' | grep -q -F $(NAME); then \
+		@if docker ps -a | egrep "[[:space:]]$(NAME)[[:space:]]"; then \
 			docker rm -f $(NAME); \
 		fi
 
