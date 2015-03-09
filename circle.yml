@@ -5,20 +5,14 @@ dependencies:
   override:
     - echo "Don't build with npm"
 deployment:
-  automerge:
-    branch: /(feature|fix|chore).*/
-    commands:
-      - git checkout stage
-      - git pull --quiet --no-edit origin stage
-      - git merge $CIRCLE_BRANCH -m "Merged commit $CIRCLE_SHA1 into $CIRCLE_BRANCH"
-      - git push origin stage
   staging:
-    branch: stage
+    branch: /(feature|fix|chore).*/
     commands:
       - rsync -rptz -e ssh --delete ./ prerender@webserver-stage.risevision.com:/docker-images/prerender
       - ssh prerender@webserver-stage.risevision.com 'cd /docker-images/prerender && sudo make cleanbuild remove run'
-      - echo "Trigger docker-webserver build"
-      - curl -X POST https://circleci.com/api/v1/project/Rise-Vision/docker-webserver/tree/stage?circle-token=$DOCKER_WEBSERVER_TOKEN
+      # Webserver build must be triggered manualy
+      #- echo "Trigger docker-webserver build"
+      #- curl -X POST https://circleci.com/api/v1/project/Rise-Vision/docker-webserver/tree/stage?circle-token=$DOCKER_WEBSERVER_TOKEN
   production:
     branch: master
     commands:
